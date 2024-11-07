@@ -22,6 +22,7 @@ class ChatGUI:
             self.api_handler.initialize_chat_for_character(character)
 
     def _setup_gui(self):
+
         self.chat_frame = ttk.Frame(self.root)
         self.chat_frame.pack(expand=True, fill='both', padx=10, pady=5)
         
@@ -33,8 +34,13 @@ class ChatGUI:
         )
         self.chat_display.pack(expand=True, fill='both', pady=5)
         
-        self.input_frame = ttk.Frame(self.root)
-        self.input_frame.pack(fill='x', padx=10, pady=5)
+        # bottom controls frame
+        self.controls_frame = ttk.Frame(self.root)
+        self.controls_frame.pack(fill='x', padx=10, pady=5)
+        
+
+        self.input_frame = ttk.Frame(self.controls_frame)
+        self.input_frame.pack(fill='x', pady=(0, 5))
         
         self.message_input = ttk.Entry(self.input_frame)
         self.message_input.pack(side='left', expand=True, fill='x', padx=(0, 5))
@@ -46,7 +52,28 @@ class ChatGUI:
         )
         self.send_button.pack(side='right')
         
+
+        self.exit_frame = ttk.Frame(self.controls_frame)
+        self.exit_frame.pack(fill='x')
+        
+        self.exit_button = ttk.Button(
+            self.exit_frame,
+            text="Exit",
+            command=self.exit_program,
+            style='Exit.TButton'
+        )
+        self.exit_button.pack(side='right')
+        
+
         self.message_input.bind('<Return>', lambda e: self.send_message())
+        
+
+        style = ttk.Style()
+        style.configure('Exit.TButton', foreground='red')
+
+    def exit_program(self):
+        self.root.quit()
+        self.root.destroy()
 
     def send_message(self):
         message = self.message_input.get().strip()
@@ -75,4 +102,4 @@ class ChatGUI:
 
     def update_chat_display(self, username, message):
         self.chat_display.insert(tk.END, f"{username}: {message}\n")
-        self.chat_display.see(tk.END) 
+        self.chat_display.see(tk.END)

@@ -10,8 +10,8 @@ load_dotenv()
 api_key = os.getenv("API_KEY")
 
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("gemini-1.5-flash")
-print(model.generate_content("tell me a joke").text)
+# model = genai.GenerativeModel("gemini-1.5-flash")
+# print(model.generate_content("tell me a joke").text)
 
 class APIHandler:
     def __init__(self):
